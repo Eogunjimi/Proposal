@@ -1,0 +1,67 @@
+@import "tailwindcss";
+
+/* ─────────────────────────────────────────────────────────────
+   THEME TOKENS — change the whole site's colors/fonts right here.
+   Tokens become normal Tailwind classes:
+   bg-ink · bg-panel · border-line · text-volt · text-mute · bg-leaf …
+   ───────────────────────────────────────────────────────────── */
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-display: "Space Grotesk", "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  --color-ink: #05080d;      /* page background            */
+  --color-panel: #0b111a;    /* card / section surface     */
+  --color-panel-2: #101a28;  /* lighter surface            */
+  --color-line: #1e2a3a;     /* borders                    */
+  --color-volt: #ffc506;     /* primary — solar yellow     */
+  --color-volt-2: #ffe14d;   /* bright yellow (gradients)  */
+  --color-flame: #ff9500;    /* gradient tail              */
+  --color-leaf: #2fd598;     /* green — "guaranteed"       */
+  --color-mute: #8b98a9;     /* secondary text             */
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-ink);
+}
+
+::selection {
+  background: var(--color-volt);
+  color: var(--color-ink);
+}
+
+/* ── Decorative helpers ─────────────────────────────────────── */
+
+/* faint blueprint grid used behind the hero */
+.bg-grid {
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--color-line) 55%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--color-line) 55%, transparent) 1px, transparent 1px);
+  background-size: 46px 46px;
+  mask-image: radial-gradient(ellipse 90% 70% at 50% 20%, black 35%, transparent 78%);
+}
+
+/* yellow → orange headline gradient text */
+.text-gradient {
+  background: linear-gradient(94deg, var(--color-volt-2), var(--color-volt) 45%, var(--color-flame));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* soft radial glow blobs */
+.glow-volt {
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--color-volt) 16%, transparent), transparent);
+}
+.glow-leaf {
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--color-leaf) 10%, transparent), transparent);
+}
+
+/* thin scrollbar, on brand */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--color-ink); }
+::-webkit-scrollbar-thumb { background: var(--color-line); border-radius: 8px; }
+::-webkit-scrollbar-thumb:hover { background: color-mix(in srgb, var(--color-volt) 60%, var(--color-line)); }
