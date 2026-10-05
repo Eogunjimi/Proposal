@@ -1,29 +1,45 @@
 import { useLayoutEffect, useRef, useState } from 'react';
 import { hero } from '../../data/content.js';
-import { BoltIcon } from '../../components/ui/icons.jsx';
+import {
+  ArrowRightIcon,
+  ExternalLinkIcon,
+  HomeIcon,
+  RefreshIcon,
+} from '../../components/ui/icons.jsx';
 
 /**
- * LaptopPreview — a CSS laptop showing a miniature mock of the future
- * aaoengineering.com site ("your live preview").
+ * LaptopPreview — a WORKING mini-browser inside a CSS laptop frame.
  *
- * HOW IT STAYS FULLY VISIBLE ON EVERY SCREEN:
- * The mini site is designed ONCE at a fixed width (DESIGN_WIDTH = 640px).
- * A ResizeObserver measures the real laptop-screen width and scales the
- * whole mock down/up with CSS transform — so the complete site (browser
- * bar included) is always visible, perfectly proportioned, never clipped.
+ * Features:
+ *  - Editable address bar — type any URL + Enter (or GO) to load it
+ *  - Back / forward / reload / home buttons
+ *  - The page inside is a live iframe: clickable AND scrollable
+ *  - Default load is a local demo AAO site (public/aao-site/) so the
+ *    preview always works offline; external URLs load too — note some
+ *    sites (Google, X, banks…) refuse to be embedded via X-Frame-Options,
+ *    use the ↗ button to open them in a new tab instead.
  *
- * All text is editable via src/data/content.js → hero.preview
+ * The whole browser is designed once at DESIGN_WIDTH and scale-to-fits
+ * every screen, so it is always fully visible (never clipped).
+ * Defaults live in src/data/content.js → hero.preview
  */
 const DESIGN_WIDTH = 640;
+const SCREEN_HEIGHT = 430; // design height of the viewport area
 
 export default function LaptopPreview() {
   const { preview } = hero;
+  const demoLabel = preview.url; // shown in the address bar by default
+  const demoSrc = preview.demoPath; // local demo site
 
-  const frameRef = useRef(null); // available space inside the screen bezel
-  const contentRef = useRef(null); // the unscaled 640px-wide mock
+  const frameRef = useRef(null); // available space inside the bezel
+  const contentRef = useRef(null); // the unscaled 640px-wide browser
+  const iframeRef = useRef(null);
   const [scale, setScale] = useState(0);
   const [scaledHeight, setScaledHeight] = useState(0);
+  const [address, setAddress] = useState(demoLabel);
+  const [src, setSrc] = useState(demoSrc);
 
+  // scale-to-fit: whole browser always fully visible on any screen
   useLayoutEffect(() => {
     const fit = () => {
       const w = frameRef.current?.clientWidth ?? 0;
@@ -45,12 +61,48 @@ export default function LaptopPreview() {
     };
   }, []);
 
+  // "aaoengineering.com" (or empty) → the local demo site; anything else → real URL
+  const resolveTarget = (raw) => {
+    const v = raw.trim();
+    if (!v || v === demoLabel) return demoSrc;
+    if (v.startsWith('/') || /^https?:\/\//i.test(v)) return v;
+    return `https://${v}`;
+  };
+
+  const go = (e) => {
+    e?.preventDefault();
+    setSrc(resolveTarget(address));
+  };
+  const goHome = () => {
+    setAddress(demoLabel);
+    setSrc(demoSrc);
+  };
+  const reload = () => {
+    if (iframeRef.current) iframeRef.current.src = iframeRef.current.src; // reassign = reload
+  };
+  const back = () => {
+    try {
+      iframeRef.current?.contentWindow?.history.back();
+    } catch {
+      /* cross-origin restriction — ignore */
+    }
+  };
+  const forward = () => {
+    try {
+      iframeRef.current?.contentWindow?.history.forward();
+    } catch {
+      /* cross-origin restriction — ignore */
+    }
+  };
+
+  const navBtn =
+    'grid size-7 shrink-0 place-items-center rounded-md text-mute transition-colors hover:bg-line/60 hover:text-white';
+
   return (
     <div className="relative">
       {/* ── Screen (lid) ── */}
       <div className="rounded-t-2xl border border-zinc-700 bg-zinc-800 p-1.5 pb-0 shadow-2xl shadow-black/70">
         <div ref={frameRef} className="overflow-hidden rounded-t-lg bg-ink ring-1 ring-black">
-          {/* scaled mock — measured wrapper keeps exact scaled height */}
           <div style={{ height: scaledHeight || undefined }}>
             <div
               ref={contentRef}
@@ -61,106 +113,62 @@ export default function LaptopPreview() {
                 visibility: scale ? 'visible' : 'hidden', // no flash before first measure
               }}
             >
-              {/* browser chrome */}
-              <div className="flex items-center gap-3 border-b border-line bg-zinc-900 px-4 py-2.5">
-                <span className="flex gap-1.5">
+              {/* ── browser chrome — functional toolbar + editable URL ── */}
+              <form onSubmit={go} className="flex items-center gap-1.5 border-b border-line bg-zinc-900 px-3 py-2">
+                <span className="mr-1 flex gap-1.5">
                   <i className="size-2.5 rounded-full bg-red-500/80" />
                   <i className="size-2.5 rounded-full bg-yellow-400/80" />
                   <i className="size-2.5 rounded-full bg-green-500/80" />
                 </span>
-                <span className="mx-auto flex items-center gap-1.5 rounded-md bg-ink px-4 py-1.5 text-[11px] text-mute">
-                  🔒 {preview.url}{' '}
-                  <span className="text-volt/80">{preview.urlNote}</span>
+
+                <button type="button" onClick={back} className={navBtn} title="Back" aria-label="Back">
+                  <ArrowRightIcon className="size-4 rotate-180" />
+                </button>
+                <button type="button" onClick={forward} className={navBtn} title="Forward" aria-label="Forward">
+                  <ArrowRightIcon className="size-4" />
+                </button>
+                <button type="button" onClick={reload} className={navBtn} title="Reload" aria-label="Reload">
+                  <RefreshIcon className="size-4" />
+                </button>
+                <button type="button" onClick={goHome} className={navBtn} title="Home (demo site)" aria-label="Home">
+                  <HomeIcon className="size-4" />
+                </button>
+
+                {/* editable address bar */}
+                <span className="flex min-w-0 flex-1 items-center gap-1.5 rounded-md bg-ink px-2.5 py-1 ring-1 ring-line transition-shadow focus-within:ring-volt/70">
+                  <span className="text-[11px]" aria-hidden>🔒</span>
+                  <input
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                    onFocus={(e) => e.target.select()}
+                    spellCheck={false}
+                    autoCapitalize="off"
+                    autoCorrect="off"
+                    aria-label="Address bar — type a URL and press Enter"
+                    placeholder="Type any URL, press Enter…"
+                    className="min-w-0 flex-1 bg-transparent text-[12px] text-zinc-200 outline-none placeholder:text-mute"
+                  />
+                  <button
+                    type="submit"
+                    className="shrink-0 rounded bg-volt px-2 py-0.5 text-[9px] font-bold text-ink transition hover:brightness-110"
+                  >
+                    GO
+                  </button>
                 </span>
-              </div>
 
-              {/* site nav */}
-              <div className="flex items-center justify-between gap-3 border-b border-line px-5 py-3">
-                <p className="flex items-center gap-2">
-                  <span className="grid size-5 place-items-center rounded bg-volt text-ink">
-                    <BoltIcon className="size-3" />
-                  </span>
-                  <span className="font-display text-[12px] font-bold tracking-[0.14em] text-white">
-                    AAO ENGINEERING
-                  </span>
-                </p>
-                <nav className="flex gap-3 text-[9.5px] text-mute">
-                  {preview.nav.map((item) => (
-                    <span key={item}>{item}</span>
-                  ))}
-                </nav>
-                <span className="shrink-0 rounded bg-volt px-2.5 py-1.5 text-[9px] font-bold text-ink">
-                  FREE QUOTE
-                </span>
-              </div>
+                <a href={src} target="_blank" rel="noreferrer" className={navBtn} title="Open in new tab" aria-label="Open in new tab">
+                  <ExternalLinkIcon className="size-4" />
+                </a>
+              </form>
 
-              {/* site hero */}
-              <div className="bg-gradient-to-b from-panel-2/60 to-transparent px-5 py-8 text-center">
-                <p className="text-[9px] font-semibold tracking-[0.32em] text-volt">
-                  {preview.siteHero.eyebrow}
-                </p>
-                <h4 className="mx-auto mt-2 max-w-sm font-display text-[22px] font-bold leading-snug text-white">
-                  {preview.siteHero.headline}
-                </h4>
-                <div className="mt-4 flex justify-center gap-2">
-                  <span className="rounded-full bg-volt px-4 py-1.5 text-[10px] font-bold text-ink">
-                    {preview.siteHero.primaryBtn}
-                  </span>
-                  <span className="rounded-full border border-line px-4 py-1.5 text-[10px] font-medium text-zinc-300">
-                    {preview.siteHero.secondaryBtn}
-                  </span>
-                </div>
-              </div>
-
-              {/* review cards */}
-              <div className="grid grid-cols-3 gap-2.5 px-5 pb-4">
-                {preview.reviews.map((r) => (
-                  <div key={r.name} className="rounded-lg border border-line bg-panel-2 p-3">
-                    <p className="flex items-center gap-1.5">
-                      <span className="text-[10px] tracking-tight text-flame">★★★★★</span>
-                      <span className="rounded bg-ink px-1.5 py-0.5 text-[8px] font-bold text-mute">
-                        5.0
-                      </span>
-                    </p>
-                    <p className="mt-1.5 text-[9.5px] leading-[1.45] text-zinc-400">“{r.text}”</p>
-                    <p className="mt-1.5 text-[8px] font-semibold text-mute">{r.name}</p>
-                  </div>
-                ))}
-              </div>
-
-              {/* review buttons */}
-              <div className="flex justify-center gap-2.5 pb-4">
-                <span className="rounded border border-line bg-ink px-3 py-1.5 text-[8px] font-semibold tracking-wider text-zinc-400">
-                  <span className="text-[#4285F4]">G</span> SEE ALL GOOGLE REVIEWS
-                </span>
-                <span className="rounded border border-line bg-ink px-3 py-1.5 text-[8px] font-semibold tracking-wider text-zinc-400">
-                  <span className="text-[#1877F2]">f</span> SEE ALL FACEBOOK REVIEWS
-                </span>
-              </div>
-
-              {/* service-areas marquee */}
-              <div className="overflow-hidden border-y border-line bg-panel py-2.5">
-                <div className="animate-marquee flex w-max items-center gap-5 text-[10px] font-semibold tracking-[0.22em] text-mute">
-                  {[...preview.areas, ...preview.areas].map((area, i) => (
-                    <span key={i} className="flex items-center gap-5">
-                      {area} <span className="text-volt">·</span>
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              {/* about strip */}
-              <div className="flex items-center gap-4 px-5 py-4">
-                <div className="grid h-16 w-24 shrink-0 place-items-center rounded-lg bg-gradient-to-br from-panel-2 to-line">
-                  <BoltIcon className="size-6 text-volt" />
-                </div>
-                <div>
-                  <p className="text-[8px] tracking-[0.3em] text-mute">{preview.about.eyebrow}</p>
-                  <p className="font-display text-[13px] font-bold text-white">
-                    {preview.about.line}
-                  </p>
-                </div>
-              </div>
+              {/* ── live viewport — clickable & scrollable ── */}
+              <iframe
+                ref={iframeRef}
+                src={src}
+                title="Live website preview"
+                sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+                style={{ width: DESIGN_WIDTH, height: SCREEN_HEIGHT, display: 'block', border: 0 }}
+              />
             </div>
           </div>
         </div>

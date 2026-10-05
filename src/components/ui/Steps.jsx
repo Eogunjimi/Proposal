@@ -1,10 +1,11 @@
 /**
  * Steps — numbered process cards ("01 — Ad Campaign", ...).
  * steps: [{ head, body }]
+ * stacked: force a single column (for narrow side-by-side cards)
  */
-export default function Steps({ steps }) {
+export default function Steps({ steps, stacked = false }) {
   return (
-    <ol className="grid gap-4 sm:grid-cols-2">
+    <ol className={`grid gap-4 ${stacked ? '' : 'sm:grid-cols-2'}`}>
       {steps.map((step, i) => (
         <li
           key={step.head}

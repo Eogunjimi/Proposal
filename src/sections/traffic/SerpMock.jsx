@@ -10,9 +10,9 @@ export default function SerpMock({ serp }) {
     <div className="overflow-hidden rounded-2xl border border-line bg-white text-zinc-800">
       {/* mock search bar */}
       <div className="flex items-center gap-3 border-b border-zinc-200 px-5 py-3.5">
-        <SearchIcon className="size-4.5 text-zinc-400" />
-        <p className="text-sm text-zinc-700">{serp.query}</p>
-        <span className="ml-auto hidden text-xs text-zinc-400 sm:block">About 1,240,000 results (0.41s)</span>
+        <SearchIcon className="size-4.5 shrink-0 text-zinc-400" />
+        <p className="min-w-0 flex-1 truncate text-sm text-zinc-700">{serp.query}</p>
+        <span className="ml-auto hidden shrink-0 text-xs text-zinc-400 xl:block">About 1,240,000 results (0.41s)</span>
       </div>
 
       <div className="space-y-1 bg-white p-4 sm:p-5">

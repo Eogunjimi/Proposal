@@ -91,6 +91,28 @@ export const MapPinIcon = (p) => (
   </svg>
 );
 
+export const HomeIcon = (p) => (
+  <svg {...base(p)}>
+    <path d="m3.5 11 8.5-7 8.5 7" />
+    <path d="M6 10v10h12V10" />
+  </svg>
+);
+
+export const RefreshIcon = (p) => (
+  <svg {...base(p)}>
+    <path d="M20 12a8 8 0 1 1-2.34-5.66L20 8.5" />
+    <path d="M20 3.5v5h-5" />
+  </svg>
+);
+
+export const ExternalLinkIcon = (p) => (
+  <svg {...base(p)}>
+    <path d="M14 4h6v6" />
+    <path d="M20 4 10.5 13.5" />
+    <path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" />
+  </svg>
+);
+
 export const PhoneIcon = (p) => (
   <svg {...base(p)}>
     <path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A15 15 0 0 1 3 6a2 2 0 0 1 2-2z" />
@@ -100,6 +122,21 @@ export const PhoneIcon = (p) => (
 export const SparkIcon = (p) => (
   <svg {...base(p)}>
     <path d="M12 3v4m0 10v4M3 12h4m10 0h4M5.6 5.6l2.8 2.8m7.2 7.2 2.8 2.8m0-12.8-2.8 2.8M8.4 15.6l-2.8 2.8" />
+  </svg>
+);
+
+export const GlobeIcon = (p) => (
+  <svg {...base(p)}>
+    <circle cx="12" cy="12" r="9" />
+    <path d="M3 12h18" />
+    <path d="M12 3c2.6 2.6 3.9 5.7 3.9 9s-1.3 6.4-3.9 9c-2.6-2.6-3.9-5.7-3.9-9S9.4 5.6 12 3z" />
+  </svg>
+);
+
+export const MegaphoneIcon = (p) => (
+  <svg {...base(p)}>
+    <path d="m3 11 14-6v14L3 13v-2z" />
+    <path d="M7.5 13.6V16a2.5 2.5 0 0 0 5 0v-2.4" />
   </svg>
 );
 

@@ -61,6 +61,8 @@ export default function WinningFormula() {
   const activeLever = formula.levers.find((l) => l.id === renderedId);
   const ActiveContent = contentById[renderedId];
 
+  // data for the 4th gold "payoff" box lives in content.js → formula.result
+
   return (
     <Section
       id="formula"
@@ -70,13 +72,16 @@ export default function WinningFormula() {
       sub={formula.sub}
       tinted
     >
-      {/* ── the 3 boxes ── */}
-      <div className="grid items-stretch gap-5 lg:grid-cols-3">
+      {/* ── the 3 lever boxes + the gold payoff box — always 4 in a row on desktop ── */}
+      <div className="grid items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {formula.levers.map((lever, i) => (
           <Reveal key={lever.id} delay={i * 100} className="h-full">
             <LeverBox lever={lever} open={openId === lever.id} onToggle={() => toggle(lever.id)} />
           </Reveal>
         ))}
+        <Reveal delay={300} className="h-full">
+          <ResultBox result={formula.result} />
+        </Reveal>
       </div>
 
       {/* ── the open lever's full system, dropped down below the boxes ── */}
@@ -98,5 +103,26 @@ export default function WinningFormula() {
         </div>
       </div>
     </Section>
+  );
+}
+
+/* The 4th gold "payoff" box — the "=" result of the 3 levers.
+   Not a lever: no HOW?, no dropdown. Clicks through to the final CTA. */
+function ResultBox({ result }) {
+  return (
+    <a
+      href={result.href}
+      className="group flex h-full flex-col justify-center gap-5 rounded-2xl border border-volt-2/60 bg-gradient-to-br from-volt-2 via-volt to-flame p-5 text-ink shadow-2xl shadow-volt/10 transition-transform duration-300 hover:scale-[1.02] xl:p-6"
+    >
+      <p className="text-2xl xl:text-3xl" aria-hidden>
+        {result.emojis}
+      </p>
+      <h3 className="font-display text-base font-bold leading-[1.12] xl:text-lg">
+        {result.text}
+      </h3>
+      <span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-ink/85 px-3 py-1.5 font-display text-[11px] font-bold tracking-[0.14em] text-volt">
+        {result.chip}
+      </span>
+    </a>
   );
 }

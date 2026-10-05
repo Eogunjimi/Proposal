@@ -11,14 +11,6 @@ export const site = {
   year: new Date().getFullYear(),
 };
 
-// ── Navbar links ────────────────────────────────────────────────
-export const nav = [
-  { label: 'The Formula', href: '#formula' },
-  { label: '01 · Traffic', href: '#traffic' },
-  { label: '02 · Trust', href: '#trust' },
-  { label: '03 · Conversion', href: '#conversion' },
-];
-
 // ── Hero ────────────────────────────────────────────────────────
 export const hero = {
   eyebrow: 'Prepared exclusively for AAO Engineering · by POWERGROWTHZ AGENCY',
@@ -40,24 +32,10 @@ export const hero = {
     bold: 'SOLAR INSTALLATIONS, CCTV INSTALLATIONS & OTHER ELECTRICAL SERVICES',
   },
   cta: { label: 'See the winning formula', href: '#formula' },
-  // ── The laptop "live preview" mini-site ──
+  // ── The laptop: a working mini-browser ──
   preview: {
-    url: 'aaoengineering.com',
-    urlNote: '( your live preview )',
-    nav: ['Home', 'About', 'Services', 'Projects', 'Service Areas', 'Blog', 'Contact'],
-    siteHero: {
-      eyebrow: 'SOLAR · CCTV · ELECTRICAL',
-      headline: 'Power Your Home. Secure Your Business.',
-      primaryBtn: 'Get Free Estimate',
-      secondaryBtn: 'See Projects',
-    },
-    reviews: [
-      { name: 'Chidi A. — Lekki', text: 'AAO gave us 24/7 light with solar. Clean, professional work.' },
-      { name: 'Mrs. Bello — Ikoyi', text: 'CCTV installed neatly, everything explained clearly.' },
-      { name: 'Tunde O. — Ikeja', text: 'DB upgrade + inverter for the whole office. Solid team.' },
-    ],
-    areas: ['LEKKI', 'IKOYI', 'VICTORIA ISLAND', 'IKEJA', 'YABA', 'AJAH', 'SURULERE', 'GBAGADA'],
-    about: { eyebrow: 'MEET THE TEAM', line: 'OWNER-LED. QUALITY-DRIVEN.' },
+    url: 'aaoengineering.com', // default address-bar value → loads the local demo site
+    demoPath: '/aao-site/',    // demo one-pager (public/aao-site/index.html), edit freely
   },
 };
 
@@ -68,16 +46,23 @@ export const formula = {
   highlight: 'Pull all three and the math works every time.',
   sub: 'Tap HOW? on a lever and its entire system unfolds right here — one lever at a time.',
   levers: [
-    { id: 'traffic', index: '01', icon: 'target', title: 'TRAFFIC', tagline: 'First on Google' },
-    { id: 'trust', index: '02', icon: 'shield', title: 'TRUST', tagline: 'Win them in 5 seconds' },
+    { id: 'traffic', index: '01', icon: 'target', title: 'TRAFFIC', tagline: 'GET FOUND FIRST ON GOOGLE + AI' },
+    { id: 'trust', index: '02', icon: 'shield', title: 'TRUST', tagline: 'WIN THEM IN 5 SECONDS' },
     {
       id: 'conversion',
       index: '03',
       icon: 'bolt',
       title: 'CONVERSION',
-      tagline: 'Turn visitors into booked estimates',
+      tagline: 'TURN VISITORS INTO BOOKED ESTIMATES',
     },
   ],
+  // the payoff — the 4th gold box (not a lever, has no HOW? dropdown)
+  result: {
+    emojis: '👑 💰',
+    text: '= MORE SOLAR INSTALLATIONS, CCTV & ELECTRICAL SERVICES SOLD.',
+    chip: '💰 CHA-CHING',
+    href: '#final',
+  },
 };
 
 // ── LEVER 01 · TRAFFIC ─────────────────────────────────────────
@@ -85,25 +70,28 @@ export const traffic = {
   eyebrow: 'Lever 01 — Traffic',
   title: 'Get found first',
   highlight: 'on Google + AI.',
-  sub: '50% of homeowners and businesses now ask AI before Google. Your new site shows up in both. Your competitor’s old site doesn’t.',
 
   seo: {
-    badge: 'SEO INCLUDED',
+    tab: 'SEO',
+    badge: 'INCLUDED',
+    chip: 'SEO',
     title: 'SEO + AEO Architecture',
+    panelTitle: 'SEO + AEO architecture · location, schema, AI-ready',
     tagline: 'Location pages, schema, AI-ready — the answer ChatGPT cites',
     summary: '12 city pages + schema = the answer ChatGPT cites.',
+    cta: { label: 'See it in your service-area grid', href: '#seo-diagram' },
     bullets: [
       {
         head: '12 location landing pages',
-        body: 'One per city you serve. Indexed for "solar installer near me" intent.',
+        body: 'one per city you serve. Indexed for "solar installer near me" intent.',
       },
       {
         head: 'Schema + FAQ markup',
-        body: 'Entity-pair structure ChatGPT and Gemini can cite directly.',
+        body: 'entity-pair structure ChatGPT and Gemini can cite directly.',
       },
       {
         head: 'Pillar → silo internal linking',
-        body: 'Authority flows down so every silo page ranks.',
+        body: 'authority flows down so every silo page ranks.',
       },
     ],
     why: {
@@ -138,7 +126,9 @@ export const traffic = {
   },
 
   facebook: {
-    badge: 'MONTHLY FEE',
+    tab: 'FACEBOOK ADS',
+    price: '$2,500/MO', // ✏️ set your real monthly fee
+    chip: 'FB ADS',
     title: 'Proprietary Facebook Ads Strategy',
     tagline: 'A 4-step funnel that runs while you work',
     intro:
@@ -166,7 +156,9 @@ export const traffic = {
   },
 
   lsa: {
-    badge: 'MONTHLY FEE',
+    tab: 'LOCAL SERVICE ADS',
+    price: '$1,000/MO', // ✏️ set your real monthly fee
+    chip: 'LSA',
     title: 'Local Service Ads — Google Guaranteed',
     tagline: 'Pay only when the phone rings',
     headline: 'Google Guaranteed leads. Pay only when the phone rings.',

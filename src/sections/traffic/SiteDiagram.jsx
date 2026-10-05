@@ -61,7 +61,7 @@ export default function SiteDiagram() {
       <Connector />
 
       {/* Branches from Services + Locations */}
-      <div className="grid gap-4 sm:grid-cols-2">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div className="rounded-xl border border-line bg-panel p-4">
           <p className="mb-3 font-display text-[10px] font-bold uppercase tracking-[0.22em] text-volt">
             ↳ From Services
