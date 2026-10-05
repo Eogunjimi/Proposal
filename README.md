@@ -34,14 +34,18 @@ npm run build   # production build → dist/
     │       ├── Steps.jsx       # numbered process cards (01–04)
     │       └── icons.jsx       # inline SVG icon set
     └── sections/
-        ├── Hero.jsx            # headline, 3 promises, "=" result line
-        ├── WinningFormula.jsx  # T.T.C. — 3 lever boxes w/ HOW? dropdowns
-        ├── TrafficSection.jsx  # LEVER 01 (SEO/AEO, FB Ads, Local Service Ads)
+        ├── Hero.jsx            # headline, emoji bullets, "=" result + laptop
+        │   └── hero/
+        │       └── LaptopPreview.jsx  # CSS laptop w/ mini client-site mock
+        ├── WinningFormula.jsx  # T.T.C. — 3 lever boxes; HOW? opens full system below
+        │   ├── levers/
+        │   │   ├── LeverBox.jsx        # lever card (one open at a time)
+        │   │   ├── TrafficContent.jsx  # LEVER 01 — SEO/AEO + FB Ads + LSA, all vertical
+        │   │   ├── TrustContent.jsx    # LEVER 02 (placeholder — build it out)
+        │   │   └── ConversionContent.jsx # LEVER 03 (placeholder — build it out)
         │   └── traffic/
-        │       ├── SiteDiagram.jsx  # sitemap tree (Home → tiers → pages)
-        │       └── SerpMock.jsx     # mock Google #1 result preview
-        ├── TrustSection.jsx    # LEVER 02 (placeholder — build it out)
-        ├── ConversionSection.jsx # LEVER 03 (placeholder — build it out)
+        │       ├── SiteDiagram.jsx     # sitemap tree (Home → tiers → pages)
+        │       └── SerpMock.jsx        # mock Google #1 result preview
         └── FinalCTA.jsx        # "= MORE SOLAR INSTALLATIONS…" + CTA
 ```
 

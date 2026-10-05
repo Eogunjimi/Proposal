@@ -1,15 +1,66 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { formula } from '../data/content.js';
 import Section from '../components/ui/Section.jsx';
 import Reveal from '../components/ui/Reveal.jsx';
-import { ArrowRightIcon, CheckIcon, ChevronDownIcon, leverIcons } from '../components/ui/icons.jsx';
+import LeverBox from './levers/LeverBox.jsx';
+import TrafficContent from './levers/TrafficContent.jsx';
+import TrustContent from './levers/TrustContent.jsx';
+import ConversionContent from './levers/ConversionContent.jsx';
 
 /**
  * WinningFormula — the "T.T.C." section.
- * Three lever boxes (TRAFFIC / TRUST / CONVERSION). Each box has a
- * "HOW?" button that drops the summary down inside the card.
+ *
+ * Layout: the 3 levers are BOXES in a row. Clicking HOW? on a box opens
+ * that lever's ENTIRE system in the full-width dropdown directly below
+ * the boxes — laid out vertically.
+ *
+ * Rules:
+ *  - Only one lever open at a time (clicking another swaps the panel).
+ *  - Clicking the open box's HOW? (now "CLOSE") collapses the panel.
+ *  - Nav links (#traffic / #trust / #conversion) scroll to the box and
+ *    open its panel automatically.
  */
+const contentById = {
+  traffic: TrafficContent,
+  trust: TrustContent,
+  conversion: ConversionContent,
+};
+
 export default function WinningFormula() {
+  const [openId, setOpenId] = useState(null); // null = all closed
+  const [renderedId, setRenderedId] = useState(null); // lags openId so content can animate out
+  const panelRef = useRef(null);
+
+  // Open the lever that matches the URL hash (navbar / footer links)
+  useEffect(() => {
+    const openFromHash = () => {
+      const id = window.location.hash.replace('#', '');
+      if (contentById[id]) setOpenId(id);
+    };
+    openFromHash(); // handle landing on a hash directly
+    window.addEventListener('hashchange', openFromHash);
+    return () => window.removeEventListener('hashchange', openFromHash);
+  }, []);
+
+  // Keep the current content mounted while the panel collapses
+  useEffect(() => {
+    if (openId) setRenderedId(openId);
+  }, [openId]);
+
+  // If the panel opened off-screen (mostly mobile), bring it into view
+  useEffect(() => {
+    if (!openId) return;
+    const t = setTimeout(
+      () => panelRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' }),
+      250,
+    );
+    return () => clearTimeout(t);
+  }, [openId]);
+
+  const toggle = (id) => setOpenId((current) => (current === id ? null : id));
+  const activeLever = formula.levers.find((l) => l.id === renderedId);
+  const ActiveContent = contentById[renderedId];
+
   return (
     <Section
       id="formula"
@@ -19,86 +70,33 @@ export default function WinningFormula() {
       sub={formula.sub}
       tinted
     >
-      <div className="grid gap-5 lg:grid-cols-3">
+      {/* ── the 3 boxes ── */}
+      <div className="grid items-stretch gap-5 lg:grid-cols-3">
         {formula.levers.map((lever, i) => (
-          <Reveal key={lever.id} delay={i * 120}>
-            <LeverCard lever={lever} />
+          <Reveal key={lever.id} delay={i * 100} className="h-full">
+            <LeverBox lever={lever} open={openId === lever.id} onToggle={() => toggle(lever.id)} />
           </Reveal>
         ))}
       </div>
-    </Section>
-  );
-}
 
-/* One lever box with its own HOW? dropdown */
-function LeverCard({ lever }) {
-  const [open, setOpen] = useState(false);
-  const Icon = leverIcons[lever.icon];
-
-  return (
-    <div
-      className={`flex h-full flex-col overflow-hidden rounded-2xl border bg-panel transition-colors duration-300 ${
-        open ? 'border-volt/40' : 'border-line hover:border-volt/25'
-      }`}
-    >
-      <div className="flex-1 p-6 sm:p-7">
-        {/* index + icon */}
-        <div className="flex items-start justify-between">
-          <span className="grid size-12 place-items-center rounded-xl border border-volt/30 bg-volt/10 text-volt">
-            <Icon className="size-6" />
-          </span>
-          <span className="font-display text-sm font-semibold text-mute">{lever.index}</span>
-        </div>
-
-        <h3 className="mt-5 font-display text-2xl font-bold tracking-wide text-white">
-          {lever.title}
-        </h3>
-        <p className="mt-1 text-sm text-mute">{lever.tagline}</p>
-
-        {/* HOW? — toggles the dropdown */}
-        <button
-          type="button"
-          onClick={() => setOpen((v) => !v)}
-          aria-expanded={open}
-          className={`mt-6 inline-flex items-center gap-2 rounded-full border px-4 py-2 font-display text-xs font-bold tracking-[0.18em] transition-all ${
-            open
-              ? 'border-volt bg-volt text-ink'
-              : 'border-volt/40 text-volt hover:bg-volt/10'
-          }`}
-        >
-          HOW?
-          <ChevronDownIcon
-            className={`size-4 transition-transform duration-300 ${open ? 'rotate-180' : ''}`}
-          />
-        </button>
-      </div>
-
-      {/* Dropdown body */}
+      {/* ── the open lever's full system, dropped down below the boxes ── */}
       <div
+        ref={panelRef}
         className={`grid transition-all duration-500 ease-in-out ${
-          open ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
+          openId ? 'mt-6 grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
         }`}
       >
         <div className="overflow-hidden">
-          <div className="border-t border-line bg-panel-2/60 px-6 pb-6 pt-5 sm:px-7">
-            <ul className="space-y-3">
-              {lever.points.map((point) => (
-                <li key={point} className="flex items-start gap-2.5 text-sm leading-relaxed text-zinc-300">
-                  <CheckIcon className="mt-0.5 size-4 shrink-0 text-leaf" />
-                  {point}
-                </li>
-              ))}
-            </ul>
-            <a
-              href={lever.href}
-              className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-volt hover:underline"
-            >
-              {lever.cta}
-              <ArrowRightIcon className="size-4" />
-            </a>
-          </div>
+          {ActiveContent && (
+            <div className="rounded-2xl border border-volt/35 bg-panel px-5 pb-9 pt-7 sm:px-8">
+              <p className="mb-7 font-display text-xs font-bold uppercase tracking-[0.26em] text-volt">
+                Lever {activeLever.index} — {activeLever.title} · {activeLever.tagline}
+              </p>
+              <ActiveContent />
+            </div>
+          )}
         </div>
       </div>
-    </div>
+    </Section>
   );
 }

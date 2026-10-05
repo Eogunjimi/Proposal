@@ -1,102 +1,87 @@
 import { hero } from '../data/content.js';
 import Reveal from '../components/ui/Reveal.jsx';
-import { ArrowDownIcon, CheckIcon, StarIcon } from '../components/ui/icons.jsx';
+import LaptopPreview from './hero/LaptopPreview.jsx';
+import { ArrowRightIcon } from '../components/ui/icons.jsx';
 
 /**
  * Hero — the top of the one-pager.
- * Left: headline + the 3 promises + the "=" result line.
- * Right (desktop): floating "proof" cards (Google #1, Lighthouse, AI callback).
+ * Left: eyebrow, big 3-line headline, emoji-icon bullets, "=" result line.
+ * Right: a laptop showing the client's "live preview" + ghost CTA.
+ * Copy lives in src/data/content.js → `hero`
  */
 export default function Hero() {
+  const { title } = hero;
+
   return (
-    <section id="top" className="relative overflow-hidden pb-20 pt-32 sm:pb-28 sm:pt-44">
+    <section id="top" className="relative overflow-hidden pb-20 pt-28 sm:pb-28 sm:pt-32">
       {/* backdrop: blueprint grid + glows */}
       <div className="bg-grid absolute inset-0" aria-hidden />
       <div className="glow-volt absolute -top-24 left-1/2 size-[42rem] -translate-x-1/2" aria-hidden />
       <div className="glow-leaf absolute -right-40 top-1/3 size-[30rem]" aria-hidden />
 
-      <div className="relative mx-auto grid w-full max-w-6xl items-center gap-14 px-5 sm:px-8 lg:grid-cols-[1.25fr_1fr]">
-        {/* ── Copy ── */}
-        <div>
+      <div className="relative mx-auto grid w-full max-w-6xl items-center gap-10 px-5 sm:px-8 lg:grid-cols-2 lg:gap-12">
+        {/* ── Left: copy ── */}
+        <div className="min-w-0">
           <Reveal>
-            <p className="inline-flex items-center gap-2 rounded-full border border-volt/30 bg-volt/10 px-4 py-1.5 text-xs font-semibold tracking-[0.16em] text-volt">
-              <span className="size-1.5 rounded-full bg-volt" />
-              {hero.eyebrow.toUpperCase()}
+            <p className="font-display text-[11px] font-semibold tracking-[0.26em] text-volt sm:text-xs">
+              — {hero.eyebrow.toUpperCase()}
             </p>
           </Reveal>
 
           <Reveal delay={100}>
-            <h1 className="mt-6 font-display text-4xl font-semibold leading-[1.05] text-white sm:text-6xl">
-              {hero.titleStart}{' '}
-              <span className="text-gradient">{hero.titleHighlight}</span>{' '}
-              <span className="text-zinc-400">{hero.titleEnd}</span>
+            <h1 className="mt-6 font-display text-[clamp(2rem,4vw,3.5rem)] font-bold leading-[1.08] text-white lg:text-[clamp(2rem,3.6vw,3.5rem)]">
+              <span className="sm:block">{title.line1}</span>{' '}
+              <span className="bracket sm:block">{title.line2}</span>{' '}
+              <span className="sm:block">
+                <span className="text-zinc-500">{title.forText}</span>{' '}
+                <span className="text-volt">{title.client}</span>
+              </span>
             </h1>
           </Reveal>
 
+          {/* bullets */}
           <Reveal delay={200}>
-            <ul className="mt-8 space-y-3.5">
+            <ul className="mt-9 space-y-4 border-y border-line py-6">
               {hero.bullets.map((b) => (
-                <li key={b} className="flex items-center gap-3 text-base text-zinc-200 sm:text-lg">
-                  <span className="grid size-6 shrink-0 place-items-center rounded-full border border-leaf/40 bg-leaf/10 text-leaf">
-                    <CheckIcon className="size-3.5" />
+                <li key={b.bold + b.after} className="flex items-center gap-4">
+                  <span className="grid size-11 shrink-0 place-items-center rounded-xl border border-line bg-panel-2 text-xl">
+                    {b.icon}
                   </span>
-                  {b}
+                  <p className="font-display text-base font-medium uppercase tracking-wide text-zinc-300 sm:text-lg">
+                    {b.before && `${b.before} `}
+                    <span className="font-bold text-white">{b.bold}</span>
+                    {b.after && ` ${b.after}`}
+                  </p>
                 </li>
               ))}
             </ul>
           </Reveal>
 
+          {/* "= you sell more …" result line */}
           <Reveal delay={300}>
-            <div className="mt-8 flex items-start gap-3 rounded-2xl border border-volt/35 bg-volt/[0.07] p-5">
-              <span className="grid size-8 shrink-0 place-items-center rounded-lg bg-volt font-display text-lg font-bold text-ink">
-                =
+            <div className="mt-6 flex items-center gap-4">
+              <span className="grid size-11 shrink-0 place-items-center rounded-xl border border-volt/40 bg-volt/10 text-xl">
+                {hero.result.icon}
               </span>
-              <p className="font-display text-base font-semibold leading-snug text-white sm:text-lg">
-                {hero.result.replace(/^=\s*/, '')}
+              <p className="font-display text-base font-bold uppercase tracking-wide text-zinc-300 sm:text-xl">
+                {hero.result.before}{' '}
+                <span className="text-volt">{hero.result.bold}</span>
               </p>
-            </div>
-          </Reveal>
-
-          <Reveal delay={400}>
-            <div className="mt-9 flex flex-wrap items-center gap-4">
-              <a
-                href="#formula"
-                className="inline-flex items-center gap-2 rounded-full bg-volt px-6 py-3 font-display text-sm font-bold text-ink transition-transform hover:scale-[1.04]"
-              >
-                See the winning formula
-                <ArrowDownIcon className="size-4" />
-              </a>
-              <a
-                href="#traffic"
-                className="text-sm font-semibold text-mute transition-colors hover:text-volt"
-              >
-                Skip to the 3 levers ↓
-              </a>
             </div>
           </Reveal>
         </div>
 
-        {/* ── Floating proof cards ── */}
-        <Reveal delay={250} className="relative hidden lg:block">
-          <div className="absolute inset-0 -z-10 rounded-[2rem] border border-line bg-panel/40" />
-          <div className="space-y-4 p-6">
-            {hero.stats.map((s, i) => (
-              <div
-                key={s.label}
-                className={`flex items-center justify-between gap-4 rounded-2xl border border-line bg-panel-2 px-5 py-4 shadow-2xl shadow-black/40 ${
-                  i === 1 ? 'translate-x-8' : i === 2 ? 'translate-x-3' : ''
-                }`}
-              >
-                <div className="min-w-0">
-                  <p className="truncate text-xs text-mute">{s.label}</p>
-                  <p className="mt-0.5 flex items-center gap-1.5 text-sm font-medium text-zinc-300">
-                    {s.note}
-                    {i === 0 && <StarIcon className="size-3.5 text-volt" />}
-                  </p>
-                </div>
-                <p className="font-display text-3xl font-bold text-volt">{s.value}</p>
-              </div>
-            ))}
+        {/* ── Right: laptop + ghost CTA ── */}
+        <Reveal delay={250} className="min-w-0">
+          <LaptopPreview />
+          <div className="mt-8 text-center">
+            <a
+              href={hero.cta.href}
+              className="group inline-flex items-center gap-2 border-b-2 border-volt pb-1.5 font-display text-sm font-bold uppercase tracking-[0.18em] text-volt transition-colors hover:text-volt-2"
+            >
+              {hero.cta.label}
+              <ArrowRightIcon className="size-4 transition-transform group-hover:translate-x-1" />
+            </a>
           </div>
         </Reveal>
       </div>

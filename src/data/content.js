@@ -21,22 +21,44 @@ export const nav = [
 
 // ── Hero ────────────────────────────────────────────────────────
 export const hero = {
-  eyebrow: 'A growth proposal by POWERGROWTHZ AGENCY',
-  titleStart: 'The Ultimate Solar & Electrical',
-  titleHighlight: 'Engineering Website',
-  titleEnd: 'for AAO Engineering',
+  eyebrow: 'Prepared exclusively for AAO Engineering · by POWERGROWTHZ AGENCY',
+  title: {
+    line1: 'Ultimate Solar & Electrical',
+    line2: 'Engineering Website', // wrapped in volt corner-brackets on desktop
+    forText: 'for',
+    client: 'AAO Engineering.',
+  },
+  // icon = emoji shown in the box, bold = the highlighted keyword
   bullets: [
-    'Generates more traffic',
-    'Wins the trust of homeowners & businesses',
-    'Converts them into leads',
+    { icon: '📈', before: 'GENERATES MORE', bold: 'TRAFFIC', after: '' },
+    { icon: '🤝', before: 'WINS', bold: 'TRUST', after: 'OF HOMEOWNERS & BUSINESSES' },
+    { icon: '📅', before: '', bold: 'CONVERTS', after: 'THEM INTO LEADS' },
   ],
-  result: '= You sell more solar installations, CCTV installations & other electrical services.',
-  // Floating "proof" cards beside the headline
-  stats: [
-    { label: 'Google · "solar installer lekki"', value: '#1', note: 'Organic result' },
-    { label: 'Lighthouse performance', value: '90+', note: 'Every single page' },
-    { label: 'New lead — AI callback sent', value: '0:42', note: 'Seconds after submit' },
-  ],
+  result: {
+    icon: '💰',
+    before: '= YOU SELL MORE',
+    bold: 'SOLAR INSTALLATIONS, CCTV INSTALLATIONS & OTHER ELECTRICAL SERVICES',
+  },
+  cta: { label: 'See the winning formula', href: '#formula' },
+  // ── The laptop "live preview" mini-site ──
+  preview: {
+    url: 'aaoengineering.com',
+    urlNote: '( your live preview )',
+    nav: ['Home', 'About', 'Services', 'Projects', 'Service Areas', 'Blog', 'Contact'],
+    siteHero: {
+      eyebrow: 'SOLAR · CCTV · ELECTRICAL',
+      headline: 'Power Your Home. Secure Your Business.',
+      primaryBtn: 'Get Free Estimate',
+      secondaryBtn: 'See Projects',
+    },
+    reviews: [
+      { name: 'Chidi A. — Lekki', text: 'AAO gave us 24/7 light with solar. Clean, professional work.' },
+      { name: 'Mrs. Bello — Ikoyi', text: 'CCTV installed neatly, everything explained clearly.' },
+      { name: 'Tunde O. — Ikeja', text: 'DB upgrade + inverter for the whole office. Solid team.' },
+    ],
+    areas: ['LEKKI', 'IKOYI', 'VICTORIA ISLAND', 'IKEJA', 'YABA', 'AJAH', 'SURULERE', 'GBAGADA'],
+    about: { eyebrow: 'MEET THE TEAM', line: 'OWNER-LED. QUALITY-DRIVEN.' },
+  },
 };
 
 // ── The Winning Formula (T.T.C.) — the 3 levers / HOW? boxes ───
@@ -44,49 +66,16 @@ export const formula = {
   eyebrow: 'The Winning Formula — T · T · C',
   title: 'There are 3 levers.',
   highlight: 'Pull all three and the math works every time.',
-  sub: 'Tap "HOW?" on any lever to open its breakdown — each one expands into a full system below.',
+  sub: 'Tap HOW? on a lever and its entire system unfolds right here — one lever at a time.',
   levers: [
-    {
-      id: 'traffic',
-      index: '01',
-      icon: 'target',
-      title: 'TRAFFIC',
-      tagline: 'First on Google',
-      points: [
-        'Rank #1 with SEO built for Google AND AI search (ChatGPT, Gemini).',
-        'A Facebook Ads funnel that fills your calendar in the background.',
-        'Google Guaranteed Local Service Ads — pay only when the phone rings.',
-      ],
-      cta: 'Open the traffic system',
-      href: '#traffic',
-    },
-    {
-      id: 'trust',
-      index: '02',
-      icon: 'shield',
-      title: 'TRUST',
-      tagline: 'Win them in 5 seconds',
-      points: [
-        'Live 4.9★ Google reviews pulled into the trust spine above the fold.',
-        'Real project photos from the exact neighbourhoods you serve.',
-        'Certifications, insurance & guarantees shown up front — no digging.',
-      ],
-      cta: 'Open the trust system',
-      href: '#trust',
-    },
+    { id: 'traffic', index: '01', icon: 'target', title: 'TRAFFIC', tagline: 'First on Google' },
+    { id: 'trust', index: '02', icon: 'shield', title: 'TRUST', tagline: 'Win them in 5 seconds' },
     {
       id: 'conversion',
       index: '03',
       icon: 'bolt',
       title: 'CONVERSION',
       tagline: 'Turn visitors into booked estimates',
-      points: [
-        'One-tap "Get my free estimate" forms on every page.',
-        'A 60-second AI callback so no hot lead ever goes cold.',
-        'Qualified leads land on your calendar as booked site inspections.',
-      ],
-      cta: 'Open the conversion system',
-      href: '#conversion',
     },
   ],
 };

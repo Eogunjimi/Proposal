@@ -60,6 +60,35 @@ body {
   background: radial-gradient(closest-side, color-mix(in srgb, var(--color-leaf) 10%, transparent), transparent);
 }
 
+/* corner-bracket "selection box" around a headline word (desktop only,
+   so the box never breaks across wrapped lines on small screens) */
+@media (min-width: 640px) {
+  .bracket {
+    position: relative;
+    padding: 0 0.16em;
+    white-space: nowrap;
+  }
+  .bracket::before,
+  .bracket::after {
+    content: "";
+    position: absolute;
+    width: 0.3em;
+    height: 0.3em;
+    border-color: var(--color-volt);
+    border-style: solid;
+  }
+  .bracket::before { top: 0.08em; left: 0; border-width: 3px 0 0 3px; }
+  .bracket::after  { bottom: 0.08em; right: 0; border-width: 0 3px 3px 0; }
+}
+
+/* horizontal marquee (service-area strip in the hero laptop mockup) */
+@keyframes marquee {
+  to { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: marquee 22s linear infinite;
+}
+
 /* thin scrollbar, on brand */
 ::-webkit-scrollbar { width: 10px; }
 ::-webkit-scrollbar-track { background: var(--color-ink); }
