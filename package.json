@@ -1,0 +1,22 @@
+{
+  "name": "powergrowthz-aao-proposal",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "One-page proposal website by POWERGROWTHZ AGENCY for AAO Engineering",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "vite build",
+    "preview": "vite preview --host 0.0.0.0"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.1.11",
+    "@vitejs/plugin-react": "^4.3.4",
+    "tailwindcss": "^4.1.11",
+    "vite": "^6.3.5"
+  }
+}

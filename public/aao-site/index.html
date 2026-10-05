@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AAO Engineering — Solar · CCTV · Electrical</title>
+    <!-- Demo one-pager shown inside the laptop's live preview browser.
+         Plain hand-written HTML/CSS — edit freely, no build step. -->
+    <style>
+      :root {
+        --ink: #0b111a;
+        --panel: #101a28;
+        --line: #243448;
+        --volt: #ffc506;
+        --mute: #93a1b3;
+        --text: #e6ebf2;
+      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        background: var(--ink);
+        color: var(--text);
+        line-height: 1.55;
+      }
+      a { color: inherit; text-decoration: none; }
+      .wrap { max-width: 960px; margin: 0 auto; padding: 0 20px; }
+
+      /* ── nav ── */
+      header {
+        position: sticky; top: 0; z-index: 10;
+        background: rgba(11, 17, 26, 0.92);
+        backdrop-filter: blur(8px);
+        border-bottom: 1px solid var(--line);
+      }
+      .nav { display: flex; align-items: center; justify-content: space-between; height: 58px; }
+      .logo { display: flex; align-items: center; gap: 8px; font-weight: 800; letter-spacing: 0.12em; font-size: 14px; }
+      .logo span.bolt {
+        display: grid; place-items: center; width: 24px; height: 24px;
+        background: var(--volt); color: #111; border-radius: 6px; font-size: 14px;
+      }
+      .nav nav { display: flex; gap: 18px; font-size: 13px; color: var(--mute); }
+      .nav nav a:hover { color: var(--volt); }
+      .cta {
+        background: var(--volt); color: #111; font-weight: 700; font-size: 13px;
+        padding: 8px 14px; border-radius: 999px;
+      }
+      .cta:hover { filter: brightness(1.08); }
+
+      /* ── hero ── */
+      .hero { padding: 84px 0 64px; text-align: center; }
+      .eyebrow { color: var(--volt); font-size: 12px; font-weight: 700; letter-spacing: 0.3em; }
+      .hero h1 { font-size: 42px; line-height: 1.08; margin: 14px auto 0; max-width: 620px; }
+      .hero h1 em { color: var(--volt); font-style: normal; }
+      .hero p { color: var(--mute); max-width: 520px; margin: 16px auto 0; font-size: 15px; }
+      .btns { display: flex; gap: 12px; justify-content: center; margin-top: 26px; flex-wrap: wrap; }
+      .btns a { padding: 12px 22px; border-radius: 999px; font-weight: 700; font-size: 14px; }
+      .btns a.solid { background: var(--volt); color: #111; }
+      .btns a.ghost { border: 1px solid var(--line); }
+
+      .stats { display: flex; gap: 28px; justify-content: center; margin-top: 44px; flex-wrap: wrap; }
+      .stats b { display: block; font-size: 26px; color: var(--volt); }
+      .stats span { font-size: 12px; color: var(--mute); }
+
+      /* ── sections ── */
+      section { padding: 56px 0; }
+      h2 { font-size: 26px; margin: 0 0 6px; }
+      .kick { color: var(--volt); font-size: 11px; font-weight: 700; letter-spacing: 0.26em; }
+      .sub { color: var(--mute); font-size: 14px; margin: 0 0 26px; }
+
+      .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+      .card {
+        background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 18px;
+      }
+      .card .emoji { font-size: 22px; }
+      .card h3 { font-size: 15px; margin: 10px 0 6px; }
+      .card p { font-size: 13px; color: var(--mute); margin: 0; }
+
+      .thumb {
+        height: 110px; border-radius: 10px; margin-bottom: 10px;
+        background: linear-gradient(135deg, #1b2940, #0e1622);
+        display: grid; place-items: center; font-size: 26px;
+      }
+
+      /* ── marquee ── */
+      .marquee { overflow: hidden; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 10px 0; background: #0d1522; }
+      .marquee div { display: flex; gap: 26px; white-space: nowrap; width: max-content; animation: m 18s linear infinite; font-size: 12px; letter-spacing: 0.2em; color: var(--mute); }
+      .marquee b { color: var(--volt); }
+      @keyframes m { to { transform: translateX(-50%); } }
+
+      .stars { color: #f59e0b; font-size: 13px; }
+      .who { font-size: 12px; color: var(--mute); margin-top: 8px; }
+
+      /* ── contact ── */
+      form { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; }
+      input, select {
+        background: var(--ink); border: 1px solid var(--line); color: var(--text);
+        padding: 12px 14px; border-radius: 10px; font-size: 14px; width: 100%;
+      }
+      input:focus, select:focus { outline: 2px solid rgba(255, 197, 6, 0.5); }
+      form .full { grid-column: 1 / -1; }
+      form button {
+        grid-column: 1 / -1; background: var(--volt); color: #111; border: 0;
+        padding: 14px; border-radius: 10px; font-weight: 800; font-size: 15px; cursor: pointer;
+      }
+      form button:hover { filter: brightness(1.08); }
+      .note { font-size: 12px; color: var(--mute); margin-top: 12px; text-align: center; }
+
+      footer { border-top: 1px solid var(--line); padding: 26px 0 40px; color: var(--mute); font-size: 12px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+
+      @media (max-width: 680px) {
+        .cards, form { grid-template-columns: 1fr; }
+        .nav nav { display: none; }
+        .hero h1 { font-size: 32px; }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="wrap nav">
+        <a class="logo" href="#top"><span class="bolt">⚡</span> AAO ENGINEERING</a>
+        <nav>
+          <a href="#services">Services</a>
+          <a href="#projects">Projects</a>
+          <a href="#areas">Areas</a>
+          <a href="#reviews">Reviews</a>
+        </nav>
+        <a class="cta" href="#contact">Free Quote</a>
+      </div>
+    </header>
+
+    <main id="top">
+      <div class="wrap hero">
+        <p class="eyebrow">SOLAR · CCTV · ELECTRICAL</p>
+        <h1>Power Your Home. <em>Secure Your Business.</em></h1>
+        <p>Certified solar installations, CCTV and full electrical services across Lagos — done right, the first time.</p>
+        <div class="btns">
+          <a class="solid" href="#contact">Get Free Estimate</a>
+          <a class="ghost" href="#services">See Services</a>
+        </div>
+        <div class="stats">
+          <div><b>5.0★</b><span>Google rating</span></div>
+          <div><b>120+</b><span>Installations</span></div>
+          <div><b>24/7</b><span>Support</span></div>
+        </div>
+      </div>
+
+      <div class="marquee">
+        <div>
+          <span>LEKKI <b>·</b></span><span>IKOYI <b>·</b></span><span>VICTORIA ISLAND <b>·</b></span><span>IKEJA <b>·</b></span><span>YABA <b>·</b></span><span>AJAH <b>·</b></span><span>SURULERE <b>·</b></span><span>GBAGADA <b>·</b></span>
+          <span>LEKKI <b>·</b></span><span>IKOYI <b>·</b></span><span>VICTORIA ISLAND <b>·</b></span><span>IKEJA <b>·</b></span><span>YABA <b>·</b></span><span>AJAH <b>·</b></span><span>SURULERE <b>·</b></span><span>GBAGADA <b>·</b></span>
+        </div>
+      </div>
+
+      <section id="services">
+        <div class="wrap">
+          <p class="kick">WHAT WE DO</p>
+          <h2>One team. Three trades.</h2>
+          <p class="sub">Design, supply and installation — with a workmanship warranty.</p>
+          <div class="cards">
+            <div class="card"><span class="emoji">☀️</span><h3>Residential & Commercial Solar</h3><p>Panels, inverters and batteries sized for your load. 24/7 light, no generator noise.</p></div>
+            <div class="card"><span class="emoji">🎥</span><h3>CCTV & Security</h3><p>HD camera systems with remote viewing on your phone — homes, shops and estates.</p></div>
+            <div class="card"><span class="emoji">🔌</span><h3>Electrical Services</h3><p>DB upgrades, rewiring, lighting and fault finding by certified electricians.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="projects">
+        <div class="wrap">
+          <p class="kick">RECENT WORK</p>
+          <h2>Projects around you</h2>
+          <p class="sub">Real installs in the exact areas we serve.</p>
+          <div class="cards">
+            <div class="card"><div class="thumb">🏠</div><h3>10kVA Solar — Lekki</h3><p>Full home backup, 16 panels.</p></div>
+            <div class="card"><div class="thumb">🏢</div><h3>Office CCTV — Ikeja</h3><p>24 cameras + remote monitoring.</p></div>
+            <div class="card"><div class="thumb">🏗️</div><h3>DB Upgrade — Ikoyi</h3><p>Total rewire of a 5-bedroom duplex.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="areas">
+        <div class="wrap">
+          <p class="kick">SERVICE AREAS</p>
+          <h2>Where we work</h2>
+          <p class="sub">Lekki · Ikoyi · Victoria Island · Ikeja · Yaba · Ajah · Surulere · Gbagada — and growing.</p>
+        </div>
+      </section>
+
+      <section id="reviews">
+        <div class="wrap">
+          <p class="kick">REVIEWS</p>
+          <h2>Rated 5.0 on Google</h2>
+          <p class="sub">Homeowners and businesses that now enjoy steady power.</p>
+          <div class="cards">
+            <div class="card"><p class="stars">★★★★★</p><p>“AAO gave us 24/7 light with solar. Clean, professional work.”</p><p class="who">Chidi A. — Lekki</p></div>
+            <div class="card"><p class="stars">★★★★★</p><p>“CCTV installed neatly, everything explained clearly.”</p><p class="who">Mrs. Bello — Ikoyi</p></div>
+            <div class="card"><p class="stars">★★★★★</p><p>“DB upgrade + inverter for the whole office. Solid team.”</p><p class="who">Tunde O. — Ikeja</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact">
+        <div class="wrap">
+          <p class="kick">FREE QUOTE</p>
+          <h2>Get your estimate</h2>
+          <p class="sub">Fill this in — we call you back within 60 seconds.</p>
+          <form onsubmit="event.preventDefault(); this.querySelector('button').textContent = '✓ We will call you back!';">
+            <input required placeholder="Your name" />
+            <input required placeholder="Phone / WhatsApp" />
+            <select class="full" required>
+              <option value="">What do you need?</option>
+              <option>Solar installation</option>
+              <option>CCTV installation</option>
+              <option>Electrical services</option>
+            </select>
+            <input class="full" placeholder="Area (e.g. Lekki Phase 1)" />
+            <button type="submit">Get my free estimate →</button>
+          </form>
+          <p class="note">Demo form — preview only.</p>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap footer-row"></div>
+      <div class="wrap" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+        <span>⚡ AAO ENGINEERING</span>
+        <span>Solar · CCTV · Electrical — demo site for the proposal preview</span>
+      </div>
+    </footer>
+  </body>
+</html>
