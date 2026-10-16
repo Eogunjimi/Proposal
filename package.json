@@ -1,9 +1,9 @@
 {
-  "name": "powergrowthz-aao-proposal",
+  "name": "powergrowthz-access-energy-proposal",
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "One-page proposal website by POWERGROWTHZ AGENCY for AAO Engineering",
+  "description": "One-page proposal website by POWERGROWTHZ AGENCY for Access Energy",
   "scripts": {
     "dev": "vite --host 0.0.0.0",
     "build": "vite build",

@@ -14,7 +14,7 @@ import {
  *  - Editable address bar — type any URL + Enter (or GO) to load it
  *  - Back / forward / reload / home buttons
  *  - The page inside is a live iframe: clickable AND scrollable
- *  - Default load is a local demo AAO site (public/aao-site/) so the
+ *  - Default load is a local demo Access Energy site (public/access-site/) so the
  *    preview always works offline; external URLs load too — note some
  *    sites (Google, X, banks…) refuse to be embedded via X-Frame-Options,
  *    use the ↗ button to open them in a new tab instead.
@@ -61,7 +61,7 @@ export default function LaptopPreview() {
     };
   }, []);
 
-  // "aaoengineering.com" (or empty) → the local demo site; anything else → real URL
+  // "accessenergy.com" (or empty) → the local demo site; anything else → real URL
   const resolveTarget = (raw) => {
     const v = raw.trim();
     if (!v || v === demoLabel) return demoSrc;

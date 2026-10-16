@@ -47,10 +47,10 @@ export default function Navbar() {
           {/* client logo — two-tone lockup */}
           <div className="leading-none">
             <p className="font-display text-xl font-bold tracking-[0.06em] text-white sm:text-2xl">
-              AAO
+              ACCESS
             </p>
             <p className="mt-1.5 font-display text-[8px] font-semibold tracking-[0.36em] text-volt sm:text-[10px]">
-              ENGINEERING
+              ENERGY
             </p>
           </div>
         </div>
