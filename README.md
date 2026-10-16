@@ -1,6 +1,6 @@
-# AAO Engineering × POWERGROWTHZ — One-Page Proposal
+# Access Energy × POWERGROWTHZ — One-Page Proposal
 
-A one-page React website proposal built by **POWERGROWTHZ AGENCY** for **AAO Engineering**
+A one-page React website proposal built by **POWERGROWTHZ AGENCY** for **Access Energy**
 (solar · CCTV · electrical services). Everything lives on a single page, broken into
 sections with dropdowns (accordions) you can expand and edit.
 
@@ -16,7 +16,7 @@ npm run build   # production build → dist/
 
 ```
 ├── public/
-│   └── aao-site/index.html     # 🖥 demo one-pager — loads inside the laptop browser
+│   └── access-site/index.html  # 🖥 demo one-pager — loads inside the laptop browser
 ├── index.html                  # fonts + <title> + favicon
 ├── vite.config.js              # Vite + React + Tailwind CSS v4
 └── src/
@@ -59,7 +59,7 @@ npm run build   # production build → dist/
 - **Add a section** → create a file in `src/sections/`, then import it in `App.jsx`.
 - **Section anchors** → `#top` `#formula` `#traffic` `#trust` `#conversion` `#final`.
 - **Laptop browser** → the address bar is editable (type a URL + Enter); the viewport is a
-  real iframe (clickable + scrollable). Default site = `public/aao-site/index.html`.
+  real iframe (clickable + scrollable). Default site = `public/access-site/index.html`.
   Note: some external sites refuse embedding (X-Frame-Options) — use the ↗ button there.
 
 ## To-do (placeholders to replace)

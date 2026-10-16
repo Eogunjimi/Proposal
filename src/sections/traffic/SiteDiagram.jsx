@@ -34,7 +34,7 @@ export default function SiteDiagram() {
       <TierLabel>Home</TierLabel>
       <div className="flex justify-center">
         <span className="rounded-lg bg-volt px-5 py-2 font-display text-sm font-bold text-ink">
-          HOME — aaoengineering.com
+          HOME — accessenergy.com
         </span>
       </div>
 

@@ -7,18 +7,18 @@
 export const site = {
   agency: 'POWERGROWTHZ AGENCY',
   agencyShort: 'POWERGROWTHZ',
-  client: 'AAO Engineering',
+  client: 'Access Energy',
   year: new Date().getFullYear(),
 };
 
 // ── Hero ────────────────────────────────────────────────────────
 export const hero = {
-  eyebrow: 'Prepared exclusively for AAO Engineering · by POWERGROWTHZ AGENCY',
+  eyebrow: 'Prepared exclusively for Access Energy · by POWERGROWTHZ AGENCY',
   title: {
     line1: 'Ultimate Solar & Electrical',
     line2: 'Engineering Website', // wrapped in volt corner-brackets on desktop
     forText: 'for',
-    client: 'AAO Engineering.',
+    client: 'Access Energy.',
   },
   // icon = emoji shown in the box, bold = the highlighted keyword
   bullets: [
@@ -34,8 +34,8 @@ export const hero = {
   cta: { label: 'See the winning formula', href: '#formula' },
   // ── The laptop: a working mini-browser ──
   preview: {
-    url: 'aaoengineering.com', // default address-bar value → loads the local demo site
-    demoPath: '/aao-site/',    // demo one-pager (public/aao-site/index.html), edit freely
+    url: 'accessenergy.com',      // default address-bar value → loads the local demo site
+    demoPath: '/access-site/',    // demo one-pager (public/access-site/index.html), edit freely
   },
 };
 
@@ -116,8 +116,8 @@ export const traffic = {
       title: 'This could be you',
       sub: 'What homeowners & business owners see when they search',
       query: 'solar installer near me',
-      resultTitle: 'AAO Engineering — Solar, CCTV & Electrical Services | Lagos',
-      resultUrl: 'aaoengineering.com',
+      resultTitle: 'Access Energy — Solar, CCTV & Electrical Services | Lagos',
+      resultUrl: 'accessenergy.com',
       rating: '4.9',
       reviews: '87',
       snippet: 'Serving Lekki, Ikoyi, Victoria Island, Ikeja + 8 more areas. Free site assessment & quote — response within 60 seconds.',
@@ -231,5 +231,5 @@ export const finalCta = {
   line3: 'OTHER ELECTRICAL SERVICES.',
   body: 'Traffic brings them in. Trust makes them believe. Conversion puts them on your calendar. That’s the whole formula — and it’s all in this build.',
   cta: 'Approve the proposal',
-  note: 'POWERGROWTHZ AGENCY × AAO Engineering',
+  note: 'POWERGROWTHZ AGENCY × Access Energy',
 };
